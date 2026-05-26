@@ -9,7 +9,6 @@ import { Badge } from '@/components/ui/badge'
 import { Textarea } from '@/components/ui/textarea'
 import { X, Plus, Minus, Download, Edit2, Save } from 'lucide-react'
 import Image from 'next/image'
-import html2pdf from 'html2pdf.js'
 
 interface Appliance {
   id: string
@@ -141,8 +140,11 @@ export function SolarCalculator() {
     }
   }
 
-  const downloadPDF = () => {
+  const downloadPDF = async () => {
     if (!quotationRef.current) return
+    
+    // @ts-ignore
+    const html2pdf = (await import('html2pdf.js')).default
     
     const element = quotationRef.current
     const opt = {
